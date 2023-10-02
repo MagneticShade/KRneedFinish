@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+form{
+    display: flex;
+    align-self: end;
+    flex-direction: column;
+    align-items: center;
+}
+form>button{
+padding:10px
+}
+#entries{
+    display: flex;
+    flex-direction: column;
+}
+.entry{
+    display: flex;
+}
+table{
+    width: 100%;
+	margin-bottom: 20px;
+	border: 4px solid #dddddd;
+    padding:10px;
+    
+	
+}
+
+img{
+    width: 150px;
+    height: 150px;
+}
+tr>td {
+	border: 1px solid #dddddd;
+	padding: 5px;
+}
+
+dialog {
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+
+    width: 600px;
+    height: 600px;
+}
+#container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items:center;
+}
+#container>img {
+    width: 450px;
+    height: 450px;
+}
