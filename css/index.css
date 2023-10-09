@@ -33,15 +33,15 @@ table{
 	
 }
 
-img{
+td>img{
     width: 150px;
     height: 150px;
+    cursor: pointer;
 }
 tr>td {
 	border: 1px solid #dddddd;
 	padding: 5px;
 }
-
 dialog {
     top:50%;
     left:50%;

@@ -7,6 +7,40 @@
     <title>АДМИН ПАНЕЛЬ</title>
 </head>
 <body>
-    
+
+<table id="entries">
+
+</table>
+
+<input type="button" id="add" value="ДОБАВИТЬ">
+
+<dialog id="modalAdd">
+        <form action="" >
+            <input type="text" name="name" id="nameAdd">
+            <input type="text" name="middlename" id="middlenameAdd">
+            <input type="text" name="surname" id="surnameAdd">
+            <input type="date" name="birthdate" id="birthdateAdd">
+            <input type="image" name="image" src="" id="imageAdd">
+
+        </form>
+</dialog>
+
+<dialog id="modalDel">
+        <form action="">
+            <button type="submit" id="deleteConfirm">ПОДТВЕРДИТЬ УДАЛЕНИЕ</button>
+            <button type="button" class="closeModal">ЗАКРЫТЬ</button>
+        </form>
+</dialog>
+
+<dialog id="modalUpdate">
+    <form action="">
+        <img id="fullSize" src="" alt="">
+        <p id="name"></p>
+        <button type="button" class="closeModal">ЗАКРЫТЬ</button>
+    </form>
+</dialog>
+
+
+<script type="module" src="scripts/admin.js"></script>
 </body>
 </html>

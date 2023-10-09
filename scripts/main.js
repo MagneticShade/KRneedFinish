@@ -1,63 +1,89 @@
 "use strict"
+import { get } from "./requests.js"
 
-let modal=document.getElementById("modal")
-async function generate(){
-    let entries 
+async function start() {
+    await generate()
 
-   await fetch("../php/requests.php?"+new URLSearchParams({
-        type:"GET"
-    })).then(result=>{
-      return result.json()
-    }).then(json=>{
-         entries=json
+    let modal=document.getElementById("modal")
+    let images=document.querySelectorAll("td>img")
+
+    for ( let img of images){
+        img.addEventListener("click",function () {
+            document.getElementById("fullSize").setAttribute("src",img.getAttribute("src"))
+            document.getElementById("name").textContent=img.parentElement.parentElement.querySelector(".name").textContent
+            modal.showModal()
+        })
+    }
+
+    document.getElementById("closeModal").addEventListener("click",function(){
+        modal.close()
     })
+}
 
-    let docEntries=document.getElementById("entries");
-    let tr=document.createElement("tr");
+start()
+
+async function generate(admin){
+
+
+    let entries = await get()
+    let docEntries =document.getElementById("entries");
+    let tr = document.createElement("tr");
+    let positionNumber = 1;
     for(let row of entries){
-       
-        let position=document.createElement("td");
-        let image=document.createElement("td");
-        let name=document.createElement("td");
-        let birhdate=document.createElement("td");
-        let date=document.createElement("td");
 
-        let positionText=document.createElement("p");
-        let imageImg=document.createElement("img");
-        let nameText=document.createElement("p");
-        let birhdateText=document.createElement("p");
-        let dateText=document.createElement("p");
-        
-        positionText.textContent=row.position
-        imageImg.setAttribute("src",row.path)
-        nameText.textContent=row.name
-        birhdateText.textContent=row.birhdate
+        let position = document.createElement("td");
+        let image = document.createElement("td");
+        let name = document.createElement("td");
+        let birthdate = document.createElement("td");
+        let date = document.createElement("td");
+
+        let positionText = document.createElement("p");
+        let nameText = document.createElement("p");
+        let dateText = document.createElement("p");
+
+        positionText.classList.add("position")
+        nameText.classList.add("name")
+        dateText.classList.add("date")
+
+        positionText.textContent= String(positionNumber)
+        nameText.textContent=row.name+" "+row.middlename+ " " + row.surname
         dateText.textContent=row.date
 
-        position.appendChild(positionText);
-        image.appendChild(imageImg)
+        position.appendChild(positionText)
         name.appendChild(nameText)
-        birhdate.appendChild(birhdateText)
         date.appendChild(dateText)
 
+
         tr.appendChild(position)
-        tr.appendChild(image)
         tr.appendChild(name)
-        tr.appendChild(birhdate)
         tr.appendChild(date)
 
-        image.addEventListener("click",function(){
-            document.getElementById("fullSize").setAttribute("src",row.path)
-            document.getElementById("name").textContent=row.name
-            modal.showModal()
+        if (admin==true){
+            let imageSrc=document.createElement("p");
+            imageSrc.classList.add("img")
+            imageSrc.textContent=row.path
+            image.appendChild(imageSrc)
 
-        })
+            let birthdateText=document.createElement("p")
+            birthdateText.classList.add("birthdate")
+            birthdateText.textContent=row.birthdate
+            birthdate.appendChild(birthdateText)
+            tr.appendChild(birthdate)
+        }
+        else{
+            let imageImg=document.createElement("img");
+            imageImg.classList.add("img")
+            imageImg.setAttribute("src",row.path)
+            image.appendChild(imageImg)
+        }
+
+        tr.appendChild(image)
+
+
+
+
+        positionNumber++
+
     }
     docEntries.appendChild(tr)
 }
-generate();
-
-document.getElementById("closeModal").addEventListener("click",function(){
-
-    modal.close()
-})
