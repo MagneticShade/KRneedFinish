@@ -1,7 +1,55 @@
 "use strict"
-import { getSafe,del,patch,post } from "./requests.js"
+import { safeGet,del,put,post } from "./requests.js"
 
+let modal=document.getElementById("modal")
+let form=modal.querySelector("form")
+let closeBut=document.getElementById("close")
 
+modal.addEventListener('close',function () {
+    document.getElementById("confirm").remove()
+})
+
+closeBut.addEventListener('click',function () {
+    modal.close()
+})
+
+document.getElementById("add").addEventListener("click",function () {
+    setupModal("ДОБАВИТЬ")
+    setupModalInput()
+})
+
+function remove(id) {
+console.log(del(id))
+}
+
+function add() {
+
+}
+
+function edit(id) {
+
+    put(id,new FormData(form))
+
+}
+
+function setupModal(text,func,id) {
+    let button=document.createElement("button")
+    button.textContent=text
+    button.setAttribute("id","confirm")
+    button.setAttribute("type","submit")
+    document.getElementById("buttons").prepend(button)
+    modal.showModal()
+    button.addEventListener("click",()=>{
+        func(id)
+    })
+    button=null
+}
+function setupModalInput() {
+    let tpl=document.getElementById("prepedInputs")
+    let ins=tpl.content.cloneNode(true);
+
+    document.getElementById("inputs").replaceChildren(...ins.childNodes)
+}
 
  function nummerate() {
     let temp=document.querySelectorAll(".position")
@@ -28,15 +76,10 @@ import { getSafe,del,patch,post } from "./requests.js"
     }
 }
 
-function remove(id) {
-    console.log(del(id))
-}
-
  async function generate(){
 
-    let entries = await getSafe()
+    let entries = await safeGet()
     let docEntries =document.getElementById("entries");
-
 
     for(let row of entries){
         let tr=document.createElement("tr")
@@ -58,16 +101,12 @@ function remove(id) {
         let delCell = document.createElement("td")
         let updateCell=document.createElement("td")
 
-        let update=document.createElement("input");
-        let deleteButton = document.createElement("input");
+        let update=document.createElement("button");
+        let deleteButton = document.createElement("button");
 
 
-
-        update.setAttribute("type","button");
-        deleteButton.setAttribute("type","button");
-
-        update.value="ОБНОВИТЬ";
-        deleteButton.value="УДАЛИТЬ";
+        update.textContent="ОБНОВИТЬ";
+        deleteButton.textContent="УДАЛИТЬ";
 
 
         delCell.appendChild(deleteButton);
@@ -81,12 +120,16 @@ function remove(id) {
         docEntries.appendChild(tr)
 
         update.addEventListener('click',function () {
-            document.getElementById("modalDel").showModal()
-            document.querySelector("#modalUpdate>form").action=`javascript:${patch(id)}`
+
+            setupModal("ОБНОВИТЬ",edit,id)
+            setupModalInput()
+
 
         })
         deleteButton.addEventListener('click',function () {
-            document.getElementById("modalDel").showModal()
+
+            setupModal("УДАЛИТЬ",remove,id);
+
 
 
         })

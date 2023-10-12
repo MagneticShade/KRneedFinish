@@ -2,53 +2,54 @@
 require_once ("link.php");
 error_reporting(E_ALL);
 
- if (isset($_GET["type"])){
-        $entries=mysqli_query($link,"SELECT name,middlename,surname,date,path FROM user JOIN image ON user.img=image.id ORDER BY user.date asc ");
-        $result=[];
-        while($row=mysqli_fetch_assoc($entries)){
-            array_push($result,$row);
-        }
+ if (isset($_GET)) {
+     switch ($_GET["type"]) {
+         case "GET":
+            $entries = mysqli_query($link, "SELECT name,middlename,surname,date,path FROM user JOIN image ON user.img=image.id ORDER BY user.date asc ");
+            $result = [];
+            while ($row = mysqli_fetch_assoc($entries)) {
+            array_push($result, $row);
+            }
 
-        echo json_encode($result);
- }
+            echo json_encode($result);
+            break;
 
- else if (isset($_POST)){
+         case "SAFEGET":
+             $entries = mysqli_query($link, "SELECT user.id, date,surname,name,middlename,birthdate,path FROM user JOIN image ON user.img=image.id ORDER BY user.date asc ");
+             $result = [];
+             while ($row = mysqli_fetch_assoc($entries)) {
+                 array_push($result, $row);
+             }
 
-    if($_SERVER['REQUEST_METHOD'] =="GET"){
-        $entries=mysqli_query($link,"SELECT user.id, date,surname,name,middlename,birthdate,path FROM user JOIN image ON user.img=image.id ORDER BY user.date asc ");
-        $result=[];
-        while($row=mysqli_fetch_assoc($entries)){
-            array_push($result,$row);
-        }
+             echo json_encode($result);
+             break;
 
-        echo json_encode($result);
-    }
+         case "POST":
+            $data = json_decode(file_get_contents('php://input'));
+            $name = $data->name;
+            $middlename = $data->middlename;
+            $surname = $data->surname;
+            $birthdate = $data->birthdate;
+            $imagePath = $data->img;
 
+            mysqli_query($link, "INSERT INTO `image`(`path`) VALUES ($imagePath)");
 
-    else if($_SERVER['REQUEST_METHOD'] =="POST"){
-        $data=json_decode(file_get_contents('php://input'));
-        $name=$data->name;
-        $middlename=$data->middlename;
-        $surname=$data->surname;
-        $birthdate=$data->birthdate;
-        $imagePath=$data->img;
+            $img = $link->insert_id;
 
-        mysqli_query($link,"INSERT INTO `image`(`path`) VALUES ($imagePath)");
+            mysqli_query($link, "INSERT INTO `user`(`name`, `middlename`, `surname`, `birthdate`, `img`) VALUES ('$name, $middlename, $surname, $birthdate, $img')");
+            break;
 
-        $img=$link->insert_id;
+         case "DEL":
 
-        mysqli_query($link,"INSERT INTO `user`(`name`, `middlename`, `surname`, `birthdate`, `img`) VALUES ('$name, $middlename, $surname, $birthdate, $img')");
-    }
+            $id = $_GET["id"];
+             echo(json_encode($id));
+            mysqli_query($link, "DELETE FROM user where id= $id");
 
-    else if($_SERVER['REQUEST_METHOD'] =="DELETE"){
-        $data=json_decode(file_get_contents('php://input'));
-        $id=$data->id;
-        mysqli_query($link,"DELETE FROM user where id=$id");
-    }
+            break;
 
-
-    else if($_SERVER['REQUEST_METHOD'] =="PATCH"){
-
+         case "PUT":
+             mysqli_query($link,"UPDATE");
+             break;
     }
  }
 
