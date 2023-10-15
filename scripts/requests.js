@@ -1,7 +1,7 @@
 "use strict"
 
  function get() {
-    return  fetch("../php/requests.php?"+new URLSearchParams({
+    return  fetch("../php/requests/get.php?"+new URLSearchParams({
         type:"GET"
     })).then(json=>{
         return json.json()
@@ -10,7 +10,7 @@
 
 
 function safeGet() {
-    return  fetch("../php/requests.php?"+new URLSearchParams({
+    return  fetch("../php/requests/get.php?"+new URLSearchParams({
         type:"SAFEGET"
     })).then(json=>{
         return json.json()
@@ -19,27 +19,25 @@ function safeGet() {
 
 
 function del(id) {
-     return  fetch("../php/requests.php?"+new URLSearchParams({
-         type:"DEL",
+     return  fetch("../php/requests/del.php?"+new URLSearchParams({
          id:id
-     })).then(json=>{
+     }))
+ }
+
+ function put(formData) {
+     return  fetch("../php/requests/put.php",{
+         method:'POST',
+         body:formData
+     }).then(json=>{
          return json.json()
      })
  }
 
- function put(id,formData) {
-     return  fetch("../php/requests.php?"+new URLSearchParams({
-         type:"PUT",
-         id:id,
-         data:formData
-     }))
- }
-
  function post(formData) {
-     return  fetch("../php/requests.php?"+new URLSearchParams({
-         type:"POST",
-         data:formData
-     }))
+     return  fetch("../php/requests/post.php",{
+         method:'POST',
+         body:formData
+     })
  }
 
 

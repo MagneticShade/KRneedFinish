@@ -27,9 +27,10 @@ async function generate(admin){
 
     let entries = await get()
     let docEntries =document.getElementById("entries");
-    let tr = document.createElement("tr");
+
     let positionNumber = 1;
     for(let row of entries){
+        let tr = document.createElement("tr");
 
         let position = document.createElement("td");
         let image = document.createElement("td");
@@ -58,32 +59,18 @@ async function generate(admin){
         tr.appendChild(name)
         tr.appendChild(date)
 
-        if (admin==true){
-            let imageSrc=document.createElement("p");
-            imageSrc.classList.add("img")
-            imageSrc.textContent=row.path
-            image.appendChild(imageSrc)
-
-            let birthdateText=document.createElement("p")
-            birthdateText.classList.add("birthdate")
-            birthdateText.textContent=row.birthdate
-            birthdate.appendChild(birthdateText)
-            tr.appendChild(birthdate)
-        }
-        else{
-            let imageImg=document.createElement("img");
-            imageImg.classList.add("img")
-            imageImg.setAttribute("src",row.path)
-            image.appendChild(imageImg)
-        }
+        let imageImg=document.createElement("img");
+        imageImg.classList.add("img")
+        imageImg.setAttribute("src",row.path)
+        image.appendChild(imageImg)
 
         tr.appendChild(image)
-
+        docEntries.appendChild(tr)
 
 
 
         positionNumber++
 
     }
-    docEntries.appendChild(tr)
+
 }
