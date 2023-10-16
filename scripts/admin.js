@@ -28,7 +28,7 @@ async function edit(id,elem) {
     let tmp=await put(formdata)
     let row=elem.querySelectorAll('p')
     let row_num=2;
-    console.log(tmp)
+    
     for (let key in tmp){
         row[row_num].textContent=tmp[key]
         row_num++
@@ -77,6 +77,12 @@ function setupModal(text,func,id,elem) {
 function setupModalInput() {
     let tpl=document.getElementById("prepedInputs")
     let ins=tpl.content.cloneNode(true);
+    let backupImage=ins.querySelector("#backupImage")
+    let image=ins.querySelector("#imageAdd");
+    image.addEventListener("change",function(){
+    
+        backupImage=image.value
+    })
 
     document.getElementById("inputs").replaceChildren(...ins.childNodes)
 }
@@ -158,13 +164,14 @@ function setupModalInput() {
 
             let input = modal.querySelectorAll("input")
             let row=tr.querySelectorAll('p')
+            let backupImage=modal.querySelector('#backupImage')
 
             input[2].value = row[2].textContent
             input[0].value = row[3].textContent
             input[1].value = row[4].textContent
             input[3].value = row[5].textContent
-
-
+            input[4].value = row[6].textContent
+            
 
         })
         deleteButton.addEventListener('click',function () {
