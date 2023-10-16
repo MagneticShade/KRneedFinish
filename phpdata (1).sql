@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 09 2023 г., 15:47
+-- Время создания: Окт 16 2023 г., 11:22
 -- Версия сервера: 8.0.24
 -- Версия PHP: 8.1.1
 
@@ -37,7 +37,7 @@ CREATE TABLE `image` (
 --
 
 INSERT INTO `image` (`id`, `path`) VALUES
-(1, 'img/recent-and-random-portraits_8.jpg');
+(22, 'img/Screenshot_10.png');
 
 -- --------------------------------------------------------
 
@@ -50,7 +50,7 @@ CREATE TABLE `user` (
   `name` varchar(50) NOT NULL,
   `middlename` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `surname` varchar(50) NOT NULL,
-  `birthdate` timestamp NOT NULL,
+  `birthdate` date NOT NULL,
   `img` int UNSIGNED NOT NULL,
   `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -60,7 +60,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `middlename`, `surname`, `birthdate`, `img`, `date`) VALUES
-(4, 'bruh', 'BUHN', 'bun', '2021-03-21 22:00:00', 1, '2023-10-09 12:30:56');
+(37, 'f', 'bup', 'aaaa', '2023-10-05', 22, '2023-10-16 08:13:38');
 
 --
 -- Индексы сохранённых таблиц
@@ -87,13 +87,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `image`
 --
 ALTER TABLE `image`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
