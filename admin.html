@@ -16,29 +16,29 @@
 
 
 
+ <template id="dialog">
+    <dialog id="modal">
+        <form method="dialog" action="">
+            <div id="inputs">
 
-<dialog id="modal">
-    <form method="dialog" action="">
-        <div id="inputs">
+            </div>
 
-        </div>
+            <div id="buttons">
 
-        <div id="buttons">
+                <button type="button" id="close">ЗАКРЫТЬ</button>
+            </div>
 
-            <button type="button" id="close">ЗАКРЫТЬ</button>
-        </div>
-
-    </form>
-</dialog>
-
+        </form>
+    </dialog>
+ </template>
 
 <template id="prepedInputs">
-    <input type="text" name="name" id="nameAdd">
-    <input type="text" name="middlename" id="middlenameAdd">
-    <input type="text" name="surname" id="surnameAdd">
-    <input type="date" name="birthdate" id="birthdateAdd">
-    <input type="file" name="image" id="imageAdd">
-<!--    accept=".png,.jpg"-->
+    <input type="text" name="name" id="nameAdd" required>
+    <input type="text" name="middlename" id="middlenameAdd" required>
+    <input type="text" name="surname" id="surnameAdd" required>
+    <input type="date" name="birthdate" id="birthdateAdd" required>
+    <input type="file" accept="image/png, image/jpg" name="image" id="imageAdd" required>
+
 </template>
 
 <script type="module" src="scripts/admin.js"></script>

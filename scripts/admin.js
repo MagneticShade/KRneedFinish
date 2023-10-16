@@ -1,15 +1,16 @@
 "use strict"
 import { safeGet,del,put,post } from "./requests.js"
 
-let modal=document.getElementById("modal")
-let form=modal.querySelector("form")
-let closeBut=document.getElementById("close")
-let docEntries =document.getElementById("entries");
+let modal
+let form
+let closeBut
+let docEntries =document.getElementById("entries")
 
 
 
 
 function remove(id,elem) {
+
     del(id)
     elem.remove()
     nummerate()
@@ -37,16 +38,40 @@ async function edit(id,elem) {
 }
 
 function setupModal(text,func,id,elem) {
+
+    let tpl=document.getElementById("dialog")
+    let ins=tpl.content.cloneNode(true);
+    document.querySelector('body').appendChild(ins)
+
+    ins=null
+
+    modal=document.getElementById("modal")
+    form=modal.querySelector("form")
+    closeBut=document.getElementById("close")
+
     let button=document.createElement("button")
     button.textContent=text
     button.setAttribute("id","confirm")
     button.setAttribute("type","submit")
+
     document.getElementById("buttons").prepend(button)
-    modal.showModal()
-    button.addEventListener("click",()=>{
+
+    button=null
+
+    modal.addEventListener("submit",()=>{
         func(id,elem)
     })
-    button=null
+    modal.addEventListener('close',function () {
+        document.getElementById("modal").remove()
+    })
+
+    closeBut.addEventListener('click',function () {
+        modal.close()
+    })
+
+    modal.showModal()
+
+
 }
 
 function setupModalInput() {
@@ -131,6 +156,15 @@ function setupModalInput() {
             setupModal("ОБНОВИТЬ",edit,id,tr)
             setupModalInput()
 
+            let input = modal.querySelectorAll("input")
+            let row=tr.querySelectorAll('p')
+
+            input[2].value = row[2].textContent
+            input[0].value = row[3].textContent
+            input[1].value = row[4].textContent
+            input[3].value = row[5].textContent
+
+
 
         })
         deleteButton.addEventListener('click',function () {
@@ -146,13 +180,7 @@ function setupModalInput() {
     nummerate()
 }
 
-modal.addEventListener('close',function () {
-    document.getElementById("confirm").remove()
-})
 
-closeBut.addEventListener('click',function () {
-    modal.close()
-})
 
 document.getElementById("add").addEventListener("click",function () {
     setupModal("ДОБАВИТЬ",add,null,docEntries)
